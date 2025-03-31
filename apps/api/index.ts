@@ -2,7 +2,7 @@ import express from "express";
 const app = express();
 
 import { prisma } from "db/client";
-import { auth } from "./middleware";
+import {  auth } from "./middleware";
 
 app.use(express.json());
 
