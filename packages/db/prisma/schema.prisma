@@ -23,6 +23,7 @@ model Website {
   id     String         @id @default(uuid())
   url    String
   userId String
+  disabled Boolean @default(false)
   user   User           @relation(fields: [userId], references: [id])
   ticks  WebsiteTick[]
 }
