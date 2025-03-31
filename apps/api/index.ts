@@ -44,7 +44,8 @@ app.get('api/v1/websites',async(req, res)=>{
 
     const websites = await prisma.website.findMany({
         where:{
-            userId
+            userId,
+            disabled:true
         }
     })
     res.json({
@@ -53,8 +54,19 @@ app.get('api/v1/websites',async(req, res)=>{
 })
 
 
-app.delete('api/v1/websites',async(req, res)=>{
-    
+app.delete('api/v1/website',async(req, res)=>{
+    const websiteId = req.body.websiteId ;
+    const userId = req.userId
+    await prisma.website.update({
+        where:{
+            id:websiteId,
+            userId
+        },
+        data:{
+            disabled:true
+        }
+    })
+
 })
 app.listen(3001,()=>{
     console.log("HTTP Server running on port 3001")
