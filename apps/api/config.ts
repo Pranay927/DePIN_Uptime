@@ -1,0 +1,10 @@
+export const JWT_PUBLIC_KEY=process.env.JWT_PUBLIC_KEY||`-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyg4vxhteHNZxk+oY61Uq
+D+k2llclJiT2WHFw549NDcLidNdg+Zbdjq4tMnJgBkdfB/IBqEov3zo4ryo9FltX
+AE2ITgC+1A1dxUCshV30cpHAPDaOAvi7qGttQFCNPSefAZasQpQiRGmY6J60xwj6
+fmConoTnkRKFGUkJuP0SmvHN5UFsboNfGoW2fYnvMstxGbJQvc7+qYci7OuptMHs
+MNfLTipkLmlO6uQwvnDq/OlgjaVtl3VJykxGXEk9uUyXsnPSf7Cgo87iPVfBYpNl
+dpwlz3amuJsnCFSQY60bCL7munS2tlM+FLowadS6Y8yz6yidBKt8oKAfjhdtsMLv
+bQIDAQAB
+-----END PUBLIC KEY-----
+`

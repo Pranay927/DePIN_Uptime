@@ -16,20 +16,20 @@ datasource db {
 model User {
   id      String    @id @default(uuid())
   email   String    @unique
-  website Website[]
+  // website Website[]             can't enforce this as we are using CLerk ## todo : add a webHook to enforce this
 }
 
 model Website {
-  id     String         @id @default(uuid())
-  url    String
-  userId String
-  disabled Boolean @default(false)
-  user   User           @relation(fields: [userId], references: [id])
-  ticks  WebsiteTick[]
+  id       String        @id @default(uuid())
+  url      String
+  userId   String
+  disabled Boolean       @default(false)
+  ticks    WebsiteTick[]
+  // user     User          @relation(fields: [userId], references: [id])
 }
 
 model Validator {
-  id        String         @id @default(uuid())
+  id        String        @id @default(uuid())
   publicKey String
   location  String
   ip        String
@@ -37,14 +37,15 @@ model Validator {
 }
 
 model WebsiteTick {
-  id          String     @id @default(uuid())
+  id          String        @id @default(uuid())
   websiteId   String
   validatorId String
   status      WebsiteStatus
   latency     Float
-  timestamp   DateTime   @default(now())
-  website     Website    @relation(fields: [websiteId], references: [id])
-  validator   Validator  @relation(fields: [validatorId], references: [id])
+  createdAt   DateTime      @default(now())
+  
+  website     Website       @relation(fields: [websiteId], references: [id])
+  validator   Validator     @relation(fields: [validatorId], references: [id])
 }
 
 enum WebsiteStatus {
