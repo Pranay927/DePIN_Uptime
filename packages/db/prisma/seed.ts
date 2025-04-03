@@ -4,19 +4,14 @@ import { prisma } from "../src";
 const USER_ID = "1";
 
 async function seed() {
-    await prisma.user.create({
-        data: {
-            id: USER_ID,
-            email: "test@test.com",
-        }
-    })
 
-    const website = await prisma.website.create({
-        data: {
-            url: "https://test.com",
-            userId: USER_ID
-        }
+
+    const website = await prisma.website.findFirst({
+       where:{
+        url:"HaraBara.com"
+       }
     })
+    if(!website) return;
 
     const validator = await prisma.validator.create({
         data: {
@@ -26,35 +21,23 @@ async function seed() {
         }
     })
 
-    await prisma.websiteTick.create({
-        data: {
-            websiteId: website.id,
-            status: "Good",
-            createdAt: new Date(),
-            latency: 100,
-            validatorId: validator.id
-        }
-    })
+   
 
-    await prisma.websiteTick.create({
-        data: {
-            websiteId: website.id,
-            status: "Good",
-            createdAt: new Date(Date.now() - 1000 * 60 *10),
-            latency: 100,
-            validatorId: validator.id
-        }
-    })
+    let currentTime = new Date();
 
-    await prisma.websiteTick.create({
-        data: {
-            websiteId: website.id,
-            status: "Bad",
-            createdAt: new Date(Date.now() - 1000 * 60 * 20),
-            latency: 100,
-            validatorId: validator.id
-        }
-    })
+    // Create 10 website ticks alternating status (Red-Green)
+    for (let i = 0; i < 10; i++) {
+        await prisma.websiteTick.create({
+            data: {
+                websiteId: website.id,
+                status: i < 5 ? "Good" : "Bad",  // First 5 Green, Last 5 Red
+                latency: 100,
+                validatorId: validator.id,
+                createdAt: new Date(currentTime.getTime() - i * 3 * 60 * 1000) // Decreasing 3 min each
+            }
+        });
+    }
+
 }
 
 seed();

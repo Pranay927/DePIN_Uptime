@@ -4,9 +4,12 @@ const app = express();
 import { prisma } from "db/client";
 import { auth } from "./middleware";
 import cors from "cors";
+import { requestLogger } from "./requestLogger";
 
 app.use(cors());
 app.use(express.json());
+app.use(requestLogger)
+
 
 // Creating a new website URL
 app.post("/api/v1/website", auth, async (req, res) => {
@@ -14,7 +17,7 @@ app.post("/api/v1/website", auth, async (req, res) => {
     const userId = req.userId!;
     const { url } = req.body;
     const data = await prisma.website.create({
-      data: { userId,url  },
+      data: { userId:"1",url  },
     });
     res.json({ id: data.id });
   } catch (error) {
@@ -51,7 +54,7 @@ app.get("/api/v1/websites", auth, async (req, res) => {
   try {
     const userId = req.userId;
     const websites = await prisma.website.findMany({
-      where: { userId, disabled: false },
+      where: { userId:"1", disabled: false },
       include: { ticks: true },
     });
     res.json({ websites });
